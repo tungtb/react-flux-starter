@@ -14,16 +14,33 @@ class App extends Component {
 		};
 	}
 
+	componentDidMount() {
+        UserStore.addLoggedInListener(this.onLoggedIn);
+    }
+
+    componentWillUnmount() {
+        UserStore.removeChangeListener(this.onLoggedIn);
+	}
+	
+	onLoggedIn = () => {
+		console.log("You was logged in ! " + UserStore.getSession().userName);
+		this.setState({
+			isLoggedIn: true
+		});
+    }
 
 	render() {
 		return (
-			<Router>
-				<div>
-					<Route path="/" render={() => (
-						this.state.isLoggedIn ? <Home component={Home} /> : <Login component={Login} />
-					)}/>
-				</div>
-			</Router>
+			// <Router>
+			// 	<div>
+			// 		<Route path="/" render={() => (
+			// 			this.state.isLoggedIn ? <Home component={Home} /> : <Login component={Login} />
+			// 		)}/>
+			// 	</div>
+			// </Router>
+			<div>
+				{this.state.isLoggedIn ? <Home component={Home} /> : <Login component={Login} />}
+			</div>
 		);
 	}
 }

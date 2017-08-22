@@ -22,9 +22,9 @@ export default class Login extends Component {
     }
 
     onLoggedIn = () => {
-        alert("You was logged in ! " + UserStore.getSession().userName);
-        console.log(this.props);
-        this.props.history.push('/home')
+        // alert("You was logged in ! " + UserStore.getSession().userName);
+        // console.log(this.props);
+        // this.props.history.push('/home')
     }
 
     handeInputChange(event) {

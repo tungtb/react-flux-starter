@@ -18,9 +18,7 @@ export default class Home extends Component {
 	}
 
 	componentDidMount() {
-		if (!!this.state.session) {
-			// alert("Hello " + this.state.session.userName);
-		}
+		
 	}
 
 	componentWillUnmount() {
@@ -35,6 +33,7 @@ export default class Home extends Component {
 					<h2>Home page</h2>
 					<h3>Hello {!!this.state.session ? this.state.session.userName : ""}</h3>
 				</div>
+				{/* <Nav /> */}
 			</div>
 		);
 	}
