@@ -3,7 +3,6 @@ import App from "../app/App.react";
 import Home from "../home/Home.react";
 import Login from "../login/Login.react";
 import UserStore from '../../stores/UserStore';
-import { IndexRoute } from 'react-router';
 import { BrowserRouter as Router, Route, Redirect, NavLink } from 'react-router-dom';
 
 class Nav extends Component {
@@ -24,7 +23,6 @@ class Nav extends Component {
 						<li><NavLink to="/home">Home</NavLink></li>
 						<li><NavLink to="/">Login</NavLink></li>
 					</ul> */}
-					<IndexRoute component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/home" component={Home} />
 				</div>
