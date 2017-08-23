@@ -4,7 +4,8 @@ import LocalStorage from '../utils/LocalStorage';
 
 import {
     LOGIN_SUCCESS,
-    LOGGED_IN
+    LOGGED_IN,
+    LOGOUT
 } from '../constants/AppConstants';
 
 class UserStore extends BaseStore {
@@ -14,16 +15,16 @@ class UserStore extends BaseStore {
         this.sessionData = LocalStorage.getObject('loginSession') ? LocalStorage.getObject('loginSession') : null;
     }
 
-    emitChange() {
-        this.emit(LOGGED_IN);
+    emitChange(action) {
+        this.emit(action);
     }
 
-    addLoggedInListener(callback) {
-        this.on(LOGGED_IN, callback);
+    addActionListener(action, callback) {
+        this.on(action, callback);
     }
 
-    removeChangeListener(callback) {
-        this.removeListener(LOGGED_IN, callback);
+    removeActionListener(action, callback) {
+        this.removeListener(action, callback);
     }
 
     isLoggedIn() {
@@ -38,7 +39,13 @@ class UserStore extends BaseStore {
         console.log('loginData', loginData);
         this.sessionData = loginData;
         LocalStorage.setObject('loginSession', loginData);
-        this.emitChange();
+        this.emitChange(LOGGED_IN);
+    }
+
+    logout() {
+        this.sessionData = null;
+        LocalStorage.removeItem('loginSession');
+        this.emitChange(LOGOUT);
     }
 }
 
@@ -48,6 +55,9 @@ AppDispatcher.register((action) => {
     switch (action.actionType) {
         case LOGIN_SUCCESS:
             userStore.loginSuccess(action.loginData);
+            break;
+        case LOGOUT:
+            userStore.logout();
             break;
         default:
     }

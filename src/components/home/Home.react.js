@@ -28,12 +28,12 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div className="App">
+				<Nav />
 				<div className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<h2>Home page</h2>
 					<h3>Hello {!!this.state.session ? this.state.session.userName : ""}</h3>
 				</div>
-				{/* <Nav /> */}
 			</div>
 		);
 	}

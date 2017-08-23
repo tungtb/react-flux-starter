@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from '../../assets/images/logo.svg';
 import UserStore from '../../stores/UserStore';
 import LoginActionCreator from '../../actions/LoginActionCreator';
+import {
+    LOGGED_IN,
+} from '../../constants/AppConstants';
 
 export default class Login extends Component {
 
@@ -14,11 +17,11 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
-        UserStore.addLoggedInListener(this.onLoggedIn);
+        UserStore.addActionListener(LOGGED_IN, this.onLoggedIn);
     }
 
     componentWillUnmount() {
-        UserStore.removeChangeListener(this.onLoggedIn);
+        UserStore.removeActionListener(LOGGED_IN, this.onLoggedIn);
     }
 
     onLoggedIn = () => {
@@ -36,9 +39,31 @@ export default class Login extends Component {
         });
     }
 
+    formIsValid() {
+        this.state.formError = '';
+        if (!this.state.userName) {
+            this.setState({
+                formError: this.state.formError += '<p>User name is required !</p>'
+            });
+        }
+        if (!this.state.password) {
+            this.setState({
+                formError: this.state.formError += '<p>Password is required !</p>'
+            });
+        }
+        return this.state.formError.length > 0 ? false : true;
+    }
+
     doLogin() {
-        console.log(this.state);
-        LoginActionCreator.doLogin(this.state.userName, this.state.password);
+        if (this.formIsValid()) {
+            LoginActionCreator.doLogin(this.state.userName, this.state.password);
+        }
+    }
+
+    handleKeyPress(event) {
+        if (event.key == 'Enter') {
+            this.doLogin();
+        }
     }
 
     render() {
@@ -50,12 +75,13 @@ export default class Login extends Component {
                         <h2>Login page</h2>
                     </div>
                 </div>
-                <div className="Login" style={{textAlign: 'center', marginTop: '10px'}}>
-                    <input type="text" name="userName" value={this.state.userName} onChange={this.handeInputChange.bind(this)} placeholder="User name" />
+                {this.state.formError ? <div style={{color: 'red', textAlign: 'center'}} dangerouslySetInnerHTML={{ __html: this.state.formError }}></div> : ''}
+                <div className="Login" style={{ textAlign: 'center', marginTop: '10px' }}>
+                    <input type="text" name="userName" value={this.state.userName} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.handeInputChange.bind(this)} placeholder="User name" />
                     <br /><br />
-                    <input type="password" name="password" value={this.state.password} onChange={this.handeInputChange.bind(this)} placeholder="Password" />
+                    <input type="password" name="password" value={this.state.password} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.handeInputChange.bind(this)} placeholder="Password" />
                     <br /><br />
-                    <button onClick={this.doLogin.bind(this)}>Login</button>
+                    <button type="submit" onClick={this.doLogin.bind(this)}>Login</button>
                 </div>
             </div>
         );

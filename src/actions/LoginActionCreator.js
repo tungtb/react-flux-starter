@@ -2,7 +2,8 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import CoreService from '../utils/Core.service';
 
 import {
-    LOGIN_SUCCESS
+    LOGIN_SUCCESS,
+    LOGOUT
 } from '../constants/AppConstants';
 
 export default {
@@ -22,5 +23,11 @@ export default {
             }, (err) => {
                 console.log('res err', err);
             });
+    },
+
+    doLogout() {
+        AppDispatcher.dispatch({
+            actionType: LOGOUT
+        });
     }
 };
