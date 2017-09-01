@@ -1,2 +1,2 @@
 sh builddist.sh
-docker build -t tranbatungbk/react-flux-starter .
+docker build -t tungtb/react-flux-starter .
