@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events';
-import LocalStorage from '../utils/LocalStorage';
 
 export default class BaseStore extends EventEmitter {
 

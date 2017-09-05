@@ -11,6 +11,7 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            formError: '',
             userName: '',
             password: ''
         };
@@ -25,9 +26,7 @@ export default class Login extends Component {
     }
 
     onLoggedIn = () => {
-        // alert("You was logged in ! " + UserStore.getSession().userName);
-        // console.log(this.props);
-        // this.props.history.push('/home')
+        
     }
 
     handeInputChange(event) {
@@ -40,16 +39,16 @@ export default class Login extends Component {
     }
 
     formIsValid() {
-        this.state.formError = '';
+        this.setState({formError: ''});
         if (!this.state.userName) {
-            this.setState({
-                formError: this.state.formError += '<p>User name is required !</p>'
-            });
+            this.setState((state) => ({
+                formError: state.formError += '<p>User name is required !</p>'
+            }));
         }
         if (!this.state.password) {
-            this.setState({
-                formError: this.state.formError += '<p>Password is required !</p>'
-            });
+            this.setState((state) => ({
+                formError: state.formError += '<p>Password is required !</p>'
+            }));
         }
         return this.state.formError.length > 0 ? false : true;
     }
@@ -61,7 +60,7 @@ export default class Login extends Component {
     }
 
     handleKeyPress(event) {
-        if (event.key == 'Enter') {
+        if (event.key === 'Enter') {
             this.doLogin();
         }
     }

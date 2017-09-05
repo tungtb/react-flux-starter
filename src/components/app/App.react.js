@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from "../home/Home.react";
 import Login from "../login/Login.react";
+import Main from "../main/Main.react";
 import UserStore from '../../stores/UserStore';
-import { BrowserRouter as Router, Route, Redirect, NavLink } from 'react-router-dom';
 import {
 	LOGGED_IN,
-    LOGOUT
+	LOGOUT
 } from '../../constants/AppConstants';
 
 class App extends Component {
@@ -19,22 +18,22 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-        UserStore.addActionListener(LOGGED_IN, this.onLoggedIn);
-        UserStore.addActionListener(LOGOUT, this.onLogout);
-    }
-
-    componentWillUnmount() {
-        UserStore.removeActionListener(LOGGED_IN, this.onLogout);
-        UserStore.removeActionListener(LOGOUT, this.onLogout);
+		UserStore.addActionListener(LOGGED_IN, this.onLoggedIn);
+		UserStore.addActionListener(LOGOUT, this.onLogout);
 	}
-	
+
+	componentWillUnmount() {
+		UserStore.removeActionListener(LOGGED_IN, this.onLogout);
+		UserStore.removeActionListener(LOGOUT, this.onLogout);
+	}
+
 	onLoggedIn = () => {
 		console.log("You was logged in ! " + UserStore.getSession().userName);
 		this.setState({
 			isLoggedIn: true
 		});
 	}
-	
+
 	onLogout = () => {
 		console.log("Logout");
 		this.setState({
@@ -44,9 +43,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				{this.state.isLoggedIn ? <Home component={Home} /> : <Login component={Login} />}
-			</div>
+			this.state.isLoggedIn ? <Main component={Main} /> : <Login component={Login} />
 		);
 	}
 }
