@@ -1,0 +1,4 @@
+.nav a.selected{
+    color: #fff !important;
+    background-color: #080808 !important;
+}
